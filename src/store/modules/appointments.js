@@ -1,18 +1,10 @@
+import Swal from 'sweetalert2'
+
 const state = {
   appointments: []
 };
 
-const getters = {
-  allAppointments: state => {
-    if (localStorage.getItem('appointments')) {
-      try {
-        state.appointments = JSON.parse(localStorage.getItem('appointments'));
-      } catch(e) {
-        localStorage.removeItem('appointments');
-      }
-    }
-  }
-};
+const getters = {};
 
 const actions = {
   addAppointment({commit}, form){
@@ -34,9 +26,27 @@ const mutations = {
     localStorage.setItem('appointments', parsed);
   },
   REMOVE_APPOINTMENT: (state, id) =>{
-    const appointments = JSON.parse(localStorage.getItem('appointments'));
-    const data = appointments.filter(app => app.id !== id);
-    localStorage.setItem('appointments', JSON.stringify(data))
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          const appointments = JSON.parse(localStorage.getItem('appointments'));
+          const data = appointments.filter(app => app.id !== id);
+          localStorage.setItem('appointments', JSON.stringify(data))
+          this.$forceUpdate
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
   },
   COMPLETE_APPOINTMENT: (state, updApp) => {
     let data = JSON.parse(localStorage.getItem('appointments'));

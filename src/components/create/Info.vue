@@ -45,9 +45,9 @@ export default {
     return {
       form: {
         id:  null,
-        date: '',
-        name: '',
-        note: ''
+        date: null,
+        name: null,
+        note: null
       }
     }
   },

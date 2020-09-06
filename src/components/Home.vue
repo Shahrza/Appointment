@@ -5,32 +5,35 @@
     </div>
     <ul class="list-group">
       <h2 v-if="!allAppointments.length">You have no appointments. Chill...</h2>
-      <ListItem  v-for="(appointment, index) in allAppointments" :key="index" :appointment="appointment"  />
+      <ListItem
+        v-for="appointment in allAppointments"
+        :key="appointment.id"
+        :appointment="appointment"
+      />
     </ul>
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
-import ListItem from '@/components/ListItem'
+import Navbar from "@/components/Navbar";
+import ListItem from "@/components/ListItem";
+// import { mapGetters } from "vuex";
 
 export default {
   components: {
     Navbar,
     ListItem
   },
-  data(){
+  data() {
     return {
       allAppointments: []
-    }
+    };
   },
   created() {
-    this.allAppointments = JSON.parse(localStorage.getItem('appointments'))
-  },
-
-}
+    this.allAppointments =
+      JSON.parse(localStorage.getItem("appointments")) || [];
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -8,7 +8,7 @@
           <input v-model="appointment.completed" @change="check(appointment)" class="form-check-input" type="checkbox"/>
           <label  class="form-check-label">Done</label>
          </div>
-        <button @click="deleteApp(appointment.id)" class="btn btn-danger">Del</button>
+        <button @click="deleteAppointment(appointment.id)" class="btn btn-danger">Del</button>
       </div>
     </div>
   </li>
@@ -16,7 +16,6 @@
 
 <script>
   import momentjs from 'moment'
-  import Swal from 'sweetalert2'
   import { mapActions } from 'vuex'
 
   export default {
@@ -38,28 +37,6 @@
         };
         this.checkComplete(updApp);
       },
-
-      deleteApp(id) {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#d33',
-          cancelButtonColor: '#3085d6',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.value) {
-            this.deleteAppointment(id)
-            Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            )
-            window.location.reload();
-          }
-        })
-      }
     }
   };
 </script>
