@@ -47,7 +47,6 @@ export default {
     back(){
       this.$router.push({name: 'create.info', params: this.confirmData})
     }
-
   }
 };
 </script>

@@ -4,9 +4,20 @@ const state = {
   appointments: []
 };
 
-const getters = {};
+// Getters
+const getters = {
+  allAppointments: state => { 
+    return state.appointments || []
+  }
+};
 
+
+// Actions
 const actions = {
+  fetchAppointments({ commit }) {
+    const data = JSON.parse(localStorage.getItem('appointments'))
+    commit('SET_APPOINTMENTS', data);
+  },
   addAppointment({commit}, form){
     const data = {...form, completed: false};
     commit('SET_NEW_APPOINTMENT', data)
@@ -19,9 +30,14 @@ const actions = {
   },
 };
 
+
+// Mutations
 const mutations = {
+  SET_APPOINTMENTS: (state, appointments) => (state.appointments = appointments),
   SET_NEW_APPOINTMENT: (state, appointment) => {
-    state.appointments.push(appointment);
+    if(!state.appointments) state.appointments = []
+    localStorage.setItem('appointments', [])
+    state.appointments.push(appointment)
     const parsed = JSON.stringify(state.appointments);
     localStorage.setItem('appointments', parsed);
   },
@@ -38,11 +54,11 @@ const mutations = {
         if (result.value) {
           const appointments = JSON.parse(localStorage.getItem('appointments'));
           const data = appointments.filter(app => app.id !== id);
+          state.appointments = data
           localStorage.setItem('appointments', JSON.stringify(data))
-          this.$forceUpdate
           Swal.fire(
             'Deleted!',
-            'Your file has been deleted.',
+            'Your appoinment has been deleted.',
             'success'
           )
         }

@@ -31,9 +31,10 @@
 </template>
 
 <script>
-  import { required } from 'vuelidate/lib/validators'
+  
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
+import { required } from 'vuelidate/lib/validators'
 import {mapActions} from 'vuex'
 import { uuid } from 'vue-uuid'
 
@@ -43,12 +44,7 @@ export default {
   },
   data(){
     return {
-      form: {
-        id:  null,
-        date: null,
-        name: null,
-        note: null
-      }
+      form: {}
     }
   },
   validations: {

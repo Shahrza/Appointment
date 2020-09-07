@@ -4,7 +4,7 @@
       <h4>Appointments</h4>
     </div>
     <ul class="list-group">
-      <h2 v-if="!allAppointments.length">You have no appointments. Chill...</h2>
+      <h2 v-if="!allAppointments || !allAppointments.length">You have no appointments. Chill...</h2>
       <ListItem
         v-for="appointment in allAppointments"
         :key="appointment.id"
@@ -17,21 +17,21 @@
 <script>
 import Navbar from "@/components/Navbar";
 import ListItem from "@/components/ListItem";
-// import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   components: {
     Navbar,
     ListItem
   },
-  data() {
-    return {
-      allAppointments: []
-    };
+  methods: {
+     ...mapActions(['fetchAppointments']),
   },
-  created() {
-    this.allAppointments =
-      JSON.parse(localStorage.getItem("appointments")) || [];
+  computed: {
+    ...mapGetters(['allAppointments'])
+  },
+  created(){
+    this.fetchAppointments()
   }
 };
 </script>
